@@ -77,6 +77,39 @@ def get_host_ip_list(grp_id):
     # disconnect from server
     db.close()
 
+def get_policy():
+    # Open database connection
+    db = MySQLdb.connect(host, user, passwd, db_name)
+    # testing connection:
+    if db.open:
+        print("connection is established")
+    else:
+        print("could not establish connection. Check credentials or connects sysops admin")
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+    # Prepare SQL query to get data from the table
+    query = "SELECT * FROM POLICY"
+    try:
+        # Execute the SQL command
+        cursor.execute(query)
+        # Fetch all the rows in a list of lists.
+        policies = cursor.fetchall()
+        print(policies[0])
+        print(type(policies[0]))
+        print(len(policies[0]))
+        policy_list = list()
+        for i in range(1, len(policies[0])):
+            policy_list.append(policies[0][i])
+        print (policy_list)
+        return (policy_list)
+    except MySQLdb.Error, e:
+        print("exception occured")
+        print "MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+        # Rollback in case there is any error
+        db.rollback()
+    # disconnect from server
+    db.close()
+
 def make_payload(ip_list, grp_list, policy_dict):
     payload = {}
     master_grp = {}
@@ -104,8 +137,16 @@ def update_controller():
     print(grp_list)
     # populated ip_list
     print(ip_list)
+
+
     #generated policy dict
-    policy_dict = {"group_isolation": "0", "UDP_packet_restriction": "1"}
+    policy_list = get_policy()
+    policy_dict = {}
+    policy_dict["group_isolation"] = str(policy_list[0])
+    policy_dict["UDP_packet_restriction"] = str(policy_list[1])
+    #policy_dict = {"group_isolation": "0", "UDP_packet_restriction": "1"}
+
+    #generate payload
     payload = make_payload(ip_list,grp_list,policy_dict)
     json_payload = json.dumps(payload)
     print(json_payload)
