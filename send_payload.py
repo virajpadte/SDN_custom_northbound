@@ -3,6 +3,14 @@
 import MySQLdb
 import json
 
+# get json credentials
+with open('config.json') as json_data_file:
+    data = json.load(json_data_file)
+host = data["mysql"]["host"]
+user = data["mysql"]["user"]
+passwd = data["mysql"]["passwd"]
+db_name = data["mysql"]["db"]
+
 
 def get_grps():
     # Open database connection
