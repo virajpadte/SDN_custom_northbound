@@ -1,7 +1,8 @@
+#!/usr/bin/env python
 import json
 
 
-def make_payload(ip_list,grp_list,policy_list):
+def make_payload(ip_list,grp_list,policy_dict):
     payload = {}
     master_grp = {}
     grp_dict_list = []
@@ -13,7 +14,7 @@ def make_payload(ip_list,grp_list,policy_list):
         master_grp[grp_list[idx]] = grp
     payload["Groups"] = [master_grp]
     #add policies
-    payload["Policy"] = [policy_list]
+    payload["Policy"] = [policy_dict]
     return  payload
 
 
@@ -77,19 +78,17 @@ if __name__ == "__main__":
     #
     # print("----------   ")
 
-    grp_list = ['Group1','Group2', 'Group3']
-    ip_list1 = ['10.10.1.1', '10.10.1.2']
-    ip_list2 = ['10.10.1.3', '10.10.1.4']
-    ip_list3 = ['10.10.1.5', '10.10.1.6']
-    ip_list = [ip_list1, ip_list2, ip_list3]
+    grp_list = ['1','2']
+    ip_list1 = ['10.10.1.2']
+    ip_list2 = ['10.10.1.1', '10.10.1.3', '10.10.1.4']
+    ip_list = [ip_list1, ip_list2]
 
-    #policy list:
-    policy_list = {"group_isolation":"0", "UDP_packet_restriction": "1", "No_viraj_packets": "1", "No_saurabh_packets": "0"}
-    payload = make_payload(ip_list,grp_list,policy_list)
+    #policy dict:
+    policy_dict = {"group_isolation":"0", "UDP_packet_restriction": "1" }
+    payload = make_payload(ip_list,grp_list,policy_dict)
     print(payload)
-    print(payload["Groups"][0]["Group1"])
-    print(payload["Groups"][0]["Group2"])
-    print(payload["Groups"][0]["Group3"])
+    print(payload["Groups"][0]["1"])
+    print(payload["Groups"][0]["2"])
 
 
 
