@@ -3,5 +3,5 @@ config.json
 include/*
 lib/*
 pip-selfcheck.json
-*.pyc
+send_payload.pyc
 
