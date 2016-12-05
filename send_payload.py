@@ -63,7 +63,7 @@ def get_host_ip_list(grp_id):
     query = "SELECT ip FROM hosts WHERE group_id=%s"
     try:
         # Execute the SQL command
-        cursor.execute(query, (grp_id))
+        cursor.execute(query, (grp_id,))
         # Fetch all the rows in a list of lists.
         ip_list = cursor.fetchall()
         ip_list_clean = list()
@@ -130,7 +130,6 @@ def make_payload(ip_list, grp_list, policy_dict):
 def update_controller():
     grp_list = get_grps()
     ip_list = list()
-
     for grp in grp_list:
         # getting a host list for each unique grp
         ip_list_per_grp = get_host_ip_list(grp)
