@@ -50,14 +50,21 @@ for grp in grp_name_list:
     master_ip_list.append(ip_list)
 print("master_IP_list",master_ip_list)
 
-def find_grp(master_ip_list,ip):
-    for sublist in master_ip_list:
-	#print("sublist", sublist)
-    	if ip in sublist:
-       	   #print "Found it!", sublist
-       	   break
-    found_grp = master_ip_list.index(sublist)
-    return found_grp
+def find_grp(master_ip_list, ip):
+	flag = 0
+	for sublist in master_ip_list:
+            # print("sublist", sublist)
+            if ip in sublist:
+                # print "Found it!", sublist
+                #found_grp = master_ip_list.index(sublist)
+		flag = 1
+		break
+	if flag ==1:
+		found_grp =  master_ip_list.index(sublist)
+		return found_grp
+	else:
+		return None
+
 
 
 grp_name = str(grp_name_list[find_grp(master_ip_list,'10.10.1.1')])
