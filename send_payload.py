@@ -2,6 +2,8 @@
 
 import MySQLdb
 import json
+import socket
+import sys
 
 # get json credentials
 with open('config.json') as json_data_file:
@@ -10,7 +12,8 @@ host = data["mysql"]["host"]
 user = data["mysql"]["user"]
 passwd = data["mysql"]["passwd"]
 db_name = data["mysql"]["db"]
-
+controller_ip = data["mysql"]["controller_ip"]
+controller_port = int(data["mysql"]["controller_port"])
 
 def get_grps():
     # Open database connection
@@ -149,11 +152,33 @@ def update_controller():
     #generate payload
     payload = make_payload(ip_list,grp_list,policy_dict)
     json_payload = json.dumps(payload)
+    print("json payload")
     print(json_payload)
-    parsed_json = json.loads(json_payload)
-    print(parsed_json["Groups"][0]["2"])
-    #send payload to all:
+    #parsed_json = json.loads(json_payload)
+    #print(parsed_json["Groups"][0]["2"])
 
+    #send payload to controller:
+    tcp_send(json_payload)
+
+def tcp_send(json_payload):
+
+    # Create a TCP/IP socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    # Connect the socket to the port where the server is listening
+    server_address = (controller_ip, controller_port)
+    print >> sys.stderr, 'connecting to %s port %s' % server_address
+    sock.connect(server_address)
+
+    try:
+
+        # Send data
+        print >> sys.stderr, 'sending "%s"' % json_payload
+        sock.sendall(json_payload)
+
+    finally:
+        print >> sys.stderr, 'closing socket'
+        sock.close()
 
 if __name__ == "__main__":
     # get json credentials
