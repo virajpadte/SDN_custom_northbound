@@ -60,7 +60,8 @@ def find_grp(master_ip_list,ip):
     return found_grp
 
 
-print("Found_grp",find_grp(master_ip_list,'10.10.1.1'))
+grp_name = str(grp_name_list[find_grp(master_ip_list,'10.10.1.1')])
+print("group_name",grp_name)
 
 #policy_info_retrive
 group_isolation_status = parsed_json["Policy"][0]["group_isolation"]
