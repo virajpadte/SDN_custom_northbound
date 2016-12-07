@@ -8,3 +8,4 @@ send_payload.pyc
 tcp_server.py
 client.py
 .idea/*
+sample/*
