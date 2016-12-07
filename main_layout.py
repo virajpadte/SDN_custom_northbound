@@ -347,7 +347,7 @@ class View_group:
 class Enforce_policy:
     def __init__(self, master):
         self.master = master
-        self.master.title("View a host group")
+        self.master.title("Enforce policy")
         mainframe = ttk.Frame(self.master, padding="3 3 12 12")
         mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
         mainframe.columnconfigure(0, weight=1)
@@ -424,7 +424,7 @@ class Enforce_policy:
 class View_policy:
     def __init__(self, master):
         self.master = master
-        self.master.title("View a host group")
+        self.master.title("View Policy")
         mainframe = ttk.Frame(self.master, padding="3 3 12 12")
         mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
         mainframe.columnconfigure(0, weight=1)
