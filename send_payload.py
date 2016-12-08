@@ -12,8 +12,8 @@ host = data["mysql"]["host"]
 user = data["mysql"]["user"]
 passwd = data["mysql"]["passwd"]
 db_name = data["mysql"]["db"]
-controller_ip = data["mysql"]["controller_ip"]
-controller_port = int(data["mysql"]["controller_port"])
+controller_ip = data["controller"]["controller_ip"]
+controller_port = int(data["controller"]["controller_port"])
 
 def get_grps():
     # Open database connection
@@ -180,13 +180,6 @@ def tcp_send(json_payload):
         sock.close()
 
 if __name__ == "__main__":
-    # get json credentials
-    with open('config.json') as json_data_file:
-        data = json.load(json_data_file)
-    host = data["mysql"]["host"]
-    user = data["mysql"]["user"]
-    passwd = data["mysql"]["passwd"]
-    db_name = data["mysql"]["db"]
     update_controller()
 
 
