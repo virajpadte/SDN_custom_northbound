@@ -9,3 +9,4 @@ tcp_server.py
 client.py
 .idea/*
 sample/*
+stats.log

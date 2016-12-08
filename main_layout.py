@@ -2,8 +2,8 @@ from Tkinter import *
 import ttk
 import MySQLdb
 import json
-import socket
 import send_payload
+import os
 
 
 class MainView:
@@ -27,6 +27,9 @@ class MainView:
         ttk.Label(mainframe, text="Policies").grid(column=1, row=6, sticky=W)
         ttk.Button(mainframe, text="Enforce Policy", command=self.enforce_window).grid(column=2, row=6, sticky=W)
         ttk.Button(mainframe, text="View Policy", command=self.view_poly_window).grid(column=3, row=6, sticky=W)
+
+        ttk.Label(mainframe, text="Statistics").grid(column=1, row=7, sticky=W)
+        ttk.Button(mainframe, text="Fetch Statistics", command=self.fetch_data).grid(column=2, row=7, sticky=W)
 
         for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
 
@@ -60,6 +63,11 @@ class MainView:
         self.newWindow = Toplevel(root)
         self.app = View_policy(self.newWindow)
 
+    def fetch_data(self):
+        print("fetch_data")
+        os.system(stat_query)
+        #view using the default viewer in mac
+        os.system("open stats.log")
 
 class Create_host:
     def __init__(self, master):
@@ -482,6 +490,7 @@ if __name__ == "__main__":
     user = data["mysql"]["user"]
     passwd = data["mysql"]["passwd"]
     db_name = data["mysql"]["db"]
+    stat_query = data["controller"]["stat_query"]
 
     root = Tk()
     root.title("Policy Manager")
